@@ -29,15 +29,25 @@ public class TUser {
     LocalDateTime dateJoined;
 
 
-    private boolean accountNonLocked;
-    private boolean accountNonExpired;
-    private boolean credentialsNonExpired;
+    private boolean accountNonLocked =true;
+    private boolean accountNonExpired =true;
+    private boolean credentialsNonExpired =true;
     private boolean enabled = true;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonBackReference("roles-user")
     @JoinColumn(name = "role_id", referencedColumnName = "roleId")
     private Role role;
+
+
+    public TUser(String username,String password, String email){
+        this.username = username;
+        this.password = password;
+        this.email =email;
+    }
+
+
+
 
     @Override
     public boolean equals(Object o){
@@ -48,5 +58,8 @@ public class TUser {
 
     @Override
     public int hashCode(){ return getUserId().hashCode();}
+
+
+
 
 }

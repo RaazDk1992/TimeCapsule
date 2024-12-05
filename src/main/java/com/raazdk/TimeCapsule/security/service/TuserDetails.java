@@ -42,16 +42,24 @@ public class TuserDetails  implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
     public static UserDetails build(TUser tusr){
-        GrantedAuthority authority = new SimpleGrantedAuthority(tusr.getRole().getRoles().name());
+        GrantedAuthority authority = new SimpleGrantedAuthority(tusr.getRole().getRoleName().name());
         return  new TuserDetails(
                 tusr.getUsername(),
                 tusr.getPassword(),

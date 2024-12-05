@@ -20,10 +20,14 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @ToString.Exclude
-    private AppRoles roles;
+    private AppRoles roleName;
 
     @OneToMany(mappedBy = "role",fetch = FetchType.LAZY,cascade = {CascadeType.MERGE})
     @JsonManagedReference("roles-user")
     private Set<TUser> users;
 
+
+    public Role(AppRoles roleName) {
+        this.roleName = roleName;
+    }
 }
