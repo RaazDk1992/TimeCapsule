@@ -1,10 +1,8 @@
 package com.raazdk.TimeCapsule.controller;
 
-import com.raazdk.TimeCapsule.dto.LoginRequestDto;
-import com.raazdk.TimeCapsule.dto.LoginResponse;
-import com.raazdk.TimeCapsule.models.Role;
 import com.raazdk.TimeCapsule.security.jwt.JwtUtils;
-import com.raazdk.TimeCapsule.service.TUserService;
+import com.raazdk.TimeCapsule.security.request.LoginRequest;
+import com.raazdk.TimeCapsule.security.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +32,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto requestDto){
+    public ResponseEntity<?> login(@RequestBody LoginRequest requestDto){
 
         Authentication authentication;
         try {
