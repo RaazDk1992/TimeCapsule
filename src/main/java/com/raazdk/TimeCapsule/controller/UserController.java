@@ -18,14 +18,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     TUserService userService;
+    @GetMapping("/hi")
+    public String hi(){
+        return "hi";
+    }
 
     @GetMapping("/getuser")
-
     public ResponseEntity<?> getuser(@AuthenticationPrincipal UserDetails details){
 
         TUser user = userService.getUserByUserName(details.getUsername())

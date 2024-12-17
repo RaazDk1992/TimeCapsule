@@ -21,28 +21,41 @@ import java.io.IOException;
 public class AuthFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
-    @Autowired JwtUtils utils;
+    @Autowired
+    JwtUtils utils;
 
     @Autowired
     TuserService userDetailsService;
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         try {
-
+            // Extract JWT from the Authorization header
             String jwt = utils.extractJwt(request);
-            if(jwt !=null && utils.validateJwt(jwt)){
+
+            // Validate the token and set the authentication if valid
+            if (jwt != null && utils.validateJwt(jwt)) {
                 String username = utils.getUsernameFromToken(jwt);
+
+                // Load UserDetails from the UserDetailsService
                 UserDetails details = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(details.getUsername(),details.getPassword());
+
+                // Create Authentication token with authorities
+                UsernamePasswordAuthenticationToken token =
+                        new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
+
                 token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                // Set authentication in the SecurityContext
                 SecurityContextHolder.getContext().setAuthentication(token);
             }
         } catch (Exception e) {
-            logger.debug("An Error Occurred {}",e.getMessage());
-            throw new RuntimeException(e);
+            logger.error("An error occurred during JWT filtering: {}", e.getMessage());
         }
 
-        filterChain.doFilter(request,response);
+        // Continue with the filter chain
+        filterChain.doFilter(request, response);
     }
 }

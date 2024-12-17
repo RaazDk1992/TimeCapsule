@@ -4,6 +4,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ public class JwtUtils {
     private String jwtSecret;
     @Value("${spring.app.jwtExpirationMs}")
     private String jwtExpiration;
+    Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     public String extractJwt(HttpServletRequest request){
 
@@ -59,6 +62,7 @@ public class JwtUtils {
     public String getUsernameFromToken(String token){
         String username = Jwts.parser().verifyWith((SecretKey) key())
                 .build().parseSignedClaims(token).getPayload().getSubject();
+
         return  username;
     }
 
