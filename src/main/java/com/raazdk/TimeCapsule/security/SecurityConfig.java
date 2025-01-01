@@ -45,7 +45,8 @@ public class SecurityConfig{
         http.authorizeHttpRequests((requests)->requests
                 .requestMatchers("/api/getcsrf").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/user/**").permitAll());
+                .requestMatchers("/api/user/**").permitAll()
+                .anyRequest().authenticated());
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint));
         http.addFilterBefore(tokenFilter(), UsernamePasswordAuthenticationFilter.class);
         http.httpBasic(withDefaults());

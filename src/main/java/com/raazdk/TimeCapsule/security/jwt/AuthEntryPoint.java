@@ -31,4 +31,16 @@ public class AuthEntryPoint  implements AuthenticationEntryPoint {
         mapper.writeValue(response.getOutputStream(),message);
 
     }
+
+
+    private String exactError(AuthenticationException ex){
+        final String DEFAULT_MESSAGE = "Full authentication needed";
+        if(ex.getMessage().contains("Bad Credentials")){
+            return "Invalid username or password.";
+        }else if( ex.getMessage().contains("JWT Expired")){
+            return "Your session has expired. Please log in again.";
+
+        }
+        return  DEFAULT_MESSAGE;
+    }
 }
