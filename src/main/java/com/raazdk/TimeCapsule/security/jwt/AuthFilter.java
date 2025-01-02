@@ -38,7 +38,6 @@ public class AuthFilter extends OncePerRequestFilter {
             // Validate the token and set the authentication if valid
             if (jwt != null && utils.validateJwt(jwt)) {
                 String username = utils.getUsernameFromToken(jwt);
-                System.out.println("Recieved :"+jwt);
                 // Load UserDetails from the UserDetailsService
                 UserDetails details = userDetailsService.loadUserByUsername(username);
 

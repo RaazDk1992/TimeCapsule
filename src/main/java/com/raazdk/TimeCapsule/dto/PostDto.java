@@ -8,5 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class PostDto {
     String post;
-    List<MultipartFile> images;
+    List<MultipartFile> media;
 }
