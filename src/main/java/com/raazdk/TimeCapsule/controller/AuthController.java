@@ -2,7 +2,9 @@ package com.raazdk.TimeCapsule.controller;
 
 import com.raazdk.TimeCapsule.security.jwt.JwtUtils;
 import com.raazdk.TimeCapsule.security.request.LoginRequest;
+import com.raazdk.TimeCapsule.security.request.RegisterRequest;
 import com.raazdk.TimeCapsule.security.response.LoginResponse;
+import com.raazdk.TimeCapsule.service.TUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    TUserService userService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest requestDto){
 
@@ -40,6 +45,7 @@ public class AuthController {
             authentication = manager
                     .authenticate(new UsernamePasswordAuthenticationToken(requestDto.getUsername(),requestDto.getPassword()));
 
+            System.out.println("requestDto = " + requestDto.getUsername());
         } catch (Exception e) {
             Map<String,Object> response= new HashMap<>();
             response.put("status","fail");
@@ -57,6 +63,18 @@ public class AuthController {
 
 
         return new ResponseEntity<>(successresponse,HttpStatus.OK);
+    }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request){
+        try {
+            userService.createUser(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+
     }
 
 }

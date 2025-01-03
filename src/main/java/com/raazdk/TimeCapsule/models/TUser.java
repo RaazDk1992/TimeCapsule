@@ -19,13 +19,13 @@ import java.util.Set;
 public class TUser {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userId;
-    String customUserId;
     String firstName;
     String lastName;
     String email;
     String phone;
     String username;
     String password;
+    String bio;
     String avtarLink;
 
     @CreationTimestamp

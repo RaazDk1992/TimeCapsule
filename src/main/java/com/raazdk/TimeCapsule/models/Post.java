@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -40,4 +41,8 @@ public class Post {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "post")
     @JsonManagedReference("post-reply")
     private List<PostReply> reply;
+
+    public String getUnique(){
+        return UUID.randomUUID() +"_file"+System.identityHashCode(this);
+    }
 }

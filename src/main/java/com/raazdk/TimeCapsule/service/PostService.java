@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+
 public interface PostService {
 
     public Post createPost(UserDetails details, String post, List<MultipartFile> mediaFiles);

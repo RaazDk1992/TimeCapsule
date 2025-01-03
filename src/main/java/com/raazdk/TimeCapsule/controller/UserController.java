@@ -23,10 +23,6 @@ public class UserController {
 
     @Autowired
     TUserService userService;
-    @GetMapping("/hi")
-    public String hi(){
-        return "hi";
-    }
 
     @GetMapping("/getuser")
     public ResponseEntity<?> getuser(@AuthenticationPrincipal UserDetails details){
@@ -51,17 +47,4 @@ public class UserController {
 
     }
 
-    @RestController
-    @RequestMapping("/api/post")
-    public static class PostsController {
-        @PostMapping("/createpost")
-        public ResponseEntity<?> createPost(@AuthenticationPrincipal UserDetails details
-
-                                            ){
-            return null;
-        }
-
-
-
-    }
 }
