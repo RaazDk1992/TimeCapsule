@@ -23,6 +23,7 @@ public class TUser {
     String lastName;
     String email;
     String phone;
+    @Column(unique = true,nullable = false)
     String username;
     String password;
     String bio;
